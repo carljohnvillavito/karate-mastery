@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karate Mastery | Inspired by Lookism</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --light: #f1f1f1;
+            --dark: #0f3460;
+            --transition: all 0.5s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 20, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent);
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--accent), #ff7a8a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--accent);
+        }
+
+        /* Mobile Menu */
+        .mobile-nav {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-150%);
+            transition: transform 0.4s ease;
+            z-index: 999;
+        }
+
+        .mobile-nav.active {
+            transform: translateY(0);
+        }
+
+        .mobile-nav ul {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .mobile-nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.3rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: var(--transition);
+            width: 80%;
+            text-align: center;
+        }
+
+        .mobile-nav a:hover {
+            background: rgba(233, 69, 96, 0.2);
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('imgs/lookism.png') no-repeat center center/cover;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            border: 2px solid var(--accent);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn:hover {
+            background: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(233, 69, 96, 0.6);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        .card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .card-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .card p {
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        /* History Section */
+        .history-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .history-text {
+            flex: 1;
+        }
+
+        .history-image {
+            flex: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            transform: translateX(50px);
+            opacity: 0;
+        }
+
+        .history-image.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .history-image img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Techniques Section */
+        .techniques-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .technique-category {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition);
+            transform: scale(0.9);
+            opacity: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .technique-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--accent);
+        }
+
+        .technique-category.visible {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .technique-category:hover {
+            transform: translateY(-10px);
+            background: rgba(233, 69, 96, 0.1);
+        }
+
+        .technique-category i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .technique-category h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .character-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            text-align: center;
+            transition: var(--transition);
+            transform: translateY(50px);
+            opacity: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px;
+        }
+
+        .character-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .character-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .character-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .character-card:hover .character-img img {
+            transform: scale(1.1);
+        }
+
+        .character-info {
+            padding: 20px;
+        }
+
+        .character-info h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .character-info p {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Famous People Section */
+        .people-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .person-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            text-align: center;
+            transition: var(--transition);
+            transform: translateY(50px);
+            opacity: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .person-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .person-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .person-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .person-card:hover .person-img img {
+            transform: scale(1.1);
+        }
+
+        .person-info {
+            padding: 20px;
+        }
+
+        .person-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .person-info p {
+            color: #ccc;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .history-content {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .techniques-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .people-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-fist-raised"></i>
+                <h1>Karate Mastery</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#intro">Intro</a></li>
+                    <li><a href="#history">History</a></li>
+                    <li><a href="#new-karate">New Karate</a></li>
+                    <li><a href="#techniques">Techniques</a></li>
+                    <li><a href="#famous">Famous People</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu" id="mobileMenu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#history">History</a></li>
+            <li><a href="#new-karate">New Karate</a></li>
+            <li><a href="#techniques">Techniques</a></li>
+            <li><a href="#famous">Famous People</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="intro">
+        <div class="container hero-content">
+            <h1>Master the Art of Karate</h1>
+            <p>Discover the ancient martial art that combines physical prowess with mental discipline. Experience the power, precision, and philosophy of karate through our comprehensive guide.</p>
+            <a href="#history" class="btn">Explore History</a>
+        </div>
+    </section>
+
+    <!-- History Section -->
+    <section id="history">
+        <div class="container">
+            <div class="section-title">
+                <h2>History of Karate</h2>
+            </div>
+            <div class="history-content">
+                <div class="history-text">
+                    <p>Karate, meaning "empty hand," is a martial art that developed on the Ryukyu Islands (now Okinawa, Japan) from indigenous fighting methods and Chinese kenpo. It was influenced by various martial arts, including Fujian White Crane, Shaolin Kung Fu, and indigenous Ryukyuan martial arts.</p>
+                    <p>In the 17th century, weapons were banned by invading Japanese forces, leading to the development of karate as a means of self-defense. The art was further refined and systematized in the early 20th century by masters like Gichin Funakoshi, who introduced karate to mainland Japan.</p>
+                    <p>Today, karate is practiced worldwide and is recognized as an Olympic sport. It emphasizes discipline, respect, and self-improvement alongside physical techniques.</p>
+                </div>
+                <div class="history-image">
+                    <img src="imgs/lookism.png" alt="Karate History">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Karate Section -->
+    <section id="new-karate" style="background: rgba(0, 0, 0, 0.2);">
+        <div class="container">
+            <div class="section-title">
+                <h2>The New Karate</h2>
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-img">
+                        <img src="/imgs/modern_karate_training.jpg" alt="Modern Karate">
+                    </div>
+                    <div class="card-content">
+                        <h3>Modern Training Methods</h3>
+                        <p>Today's karate incorporates modern training techniques, scientific approaches to conditioning, and sports science principles to enhance performance while maintaining traditional values.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img">
+                        <img src="imgs/zoro_lost.jpg" alt="Karate Competition">
+                    </div>
+                    <div class="card-content">
+                        <h3>Olympic Recognition</h3>
+                        <p>Karate made its Olympic debut at the Tokyo 2020 Games, showcasing the sport's evolution from traditional martial art to competitive discipline with global recognition.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img">
+                        <img src="imgs/philo_mindset.jpg" alt="Karate Philosophy">
+                    </div>
+                    <div class="card-content">
+                        <h3>Philosophy & Mindset</h3>
+                        <p>The new karate emphasizes mental fortitude, emotional intelligence, and character development alongside physical techniques, reflecting its deeper philosophical roots.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Techniques Section -->
+    <section id="techniques">
+        <div class="container">
+            <div class="section-title">
+                <h2>Different Techniques</h2>
+            </div>
+            <div class="techniques-container">
+                <div class="technique-category">
+                    <i class="fas fa-fist-raised"></i>
+                    <h3>Offensive Style</h3>
+                    <p>Master powerful strikes, punches, and kicks designed to overwhelm opponents with precision and force. Learn techniques like:</p>
+                    <ul style="list-style: none; margin-top: 15px;">
+                        <li>• Straight punch (Choku-zuki)</li>
+                        <li>• Front kick (Mae-geri)</li>
+                        <li>• Roundhouse kick (Mawashi-geri)</li>
+                        <li>• Knife-hand strike (Shuto-uchi)</li>
+                    </ul>
+                    <div class="character-card">
+                        <div class="character-img">
+                            <img src="imgs/jake_oh.jpg" alt="Jake Oh">
+                        </div>
+                        <div class="character-info">
+                            <h4>Jake Oh</h4>
+                            <p>Known for his devastating straight punches and aggressive fighting style. His offensive techniques are precise and overwhelming.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="technique-category">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Defensive Style</h3>
+                    <p>Develop blocking techniques, evasive movements, and counter-attacks to neutralize threats effectively. Key techniques include:</p>
+                    <ul style="list-style: none; margin-top: 15px;">
+                        <li>• High block (Age-uke)</li>
+                        <li>• Low block (Gedan-barai)</li>
+                        <li>• Inside block (Uchi-uke)</li>
+                        <li>• Evasion (Tai-sabaki)</li>
+                    </ul>
+                    <div class="character-card">
+                        <div class="character-img">
+                            <img src="imgs/daniel_park.jpg" alt="Daniel Park">
+                        </div>
+                        <div class="character-info">
+                            <h4>Daniel Park</h4>
+                            <p>A master of defensive techniques with exceptional reflexes and counter-attacks. His ability to read opponents is unparalleled.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Famous People Section -->
+    <section id="famous" style="background: rgba(0, 0, 0, 0.2);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Characters Who use the Karate Fighting Style</h2>
+            </div>
+            <div class="people-grid">
+                <div class="person-card">
+                    <div class="person-img">
+                        <img src="imgs/jake_oh.jpg" alt="Jake Oh">
+                    </div>
+                    <div class="person-info">
+                        <h3>Jake Oh</h3>
+                        <p>Known for his devastating straight punches and aggressive fighting style. His offensive techniques are precise and overwhelming.</p>
+                    </div>
+                </div>
+                <div class="person-card">
+                    <div class="person-img">
+                        <img src="imgs/daniel_park.jpg" alt="Daniel Park">
+                    </div>
+                    <div class="person-info">
+                        <h3>Daniel Park</h3>
+                        <p>A master of defensive techniques with exceptional reflexes and counter-attacks. His ability to read opponents is unparalleled.</p>
+                    </div>
+                </div>
+                <div class="person-card">
+                    <div class="person-img">
+                        <img src="imgs/kevin_kang.jpg" alt="Kevin Kang">
+                    </div>
+                    <div class="person-info">
+                        <h3>Kevin Kang</h3>
+                        <p>Specializes in powerful kicks and acrobatic techniques. His flexibility and agility make him a formidable opponent.</p>
+                    </div>
+                </div>
+                <div class="person-card">
+                    <div class="person-img">
+                        <img src="imgs/jung_kwan-ho.jpg" alt="Jung Kwan-ho">
+                    </div>
+                    <div class="person-info">
+                        <h3>Jung Kwan-ho</h3>
+                        <p>Combines traditional karate with modern MMA techniques. Known for his versatility and adaptability in combat.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <i class="fas fa-fist-raised"></i>
+                    <h1>Karate Mastery</h1>
+                </div>
+                <p>Embrace the Way of the Empty Hand</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2025 Karate Mastery. All rights reserved. Inspired by Lookism.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Header scroll effect
+            const header = document.querySelector('header');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    header.style.padding = '10px 0';
+                    header.style.background = 'rgba(10, 10, 20, 0.95)';
+                } else {
+                    header.style.padding = '20px 0';
+                    header.style.background = 'rgba(10, 10, 20, 0.9)';
+                }
+            });
+
+            // Mobile menu toggle
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            mobileMenu.addEventListener('click', function() {
+                mobileNav.classList.toggle('active');
+                // Change icon based on state
+                const icon = mobileMenu.querySelector('i');
+                if (mobileNav.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // Close mobile menu when clicking a link
+            const mobileLinks = document.querySelectorAll('.mobile-nav a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileNav.classList.remove('active');
+                    const icon = mobileMenu.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements
+            document.querySelectorAll('.card, .history-image, .technique-category, .person-card, .character-card').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a, .mobile-nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    // Close mobile menu if open
+                    if (mobileNav.classList.contains('active')) {
+                        mobileNav.classList.remove('active');
+                        const icon = mobileMenu.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
